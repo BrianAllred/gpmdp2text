@@ -7,6 +7,10 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Add FileSystem.Watcher.Polling package manually
+          command: |
+            dotnet add package System.IO.FileSystem.Watcher.Polling --version 0.1.1-preview2-190117-2 --source https://dotnet.myget.org/F/dotnet-corefxlab/api/v3/index.json
+      - run:
           name: Restore package dependencies
           command: |
             dotnet restore
