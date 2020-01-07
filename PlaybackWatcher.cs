@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using gpmdp2text.Extensions;
 using gpmdp2text.Models;
 using Newtonsoft.Json;
 
@@ -12,12 +13,16 @@ namespace gpmdp2text
         private PollingFileSystemWatcher playbackWatcher;
         private string playbackTextFilePath;
         private string formatString;
+        private bool updateOnTimeChange;
+
+        private Playback oldPlayback;
 
         public PlaybackWatcher(Config config)
         {
             // Get config values
             this.playbackTextFilePath = string.IsNullOrWhiteSpace(config?.outputFilePath) ? Constants.PlaybackTextFilePath : config.outputFilePath;
             this.formatString = config?.formatString;
+            this.updateOnTimeChange = config?.updateOnTimeChange ?? false;
             int playbackPollingInterval = config?.updateInterval ?? 5;
 
             // Set up file watcher for gpmdp playback
@@ -43,6 +48,12 @@ namespace gpmdp2text
                     {
                         var playback = JsonConvert.DeserializeObject<Playback>(sr.ReadToEnd());
 
+                        if (oldPlayback != null && !updateOnTimeChange && playback.CompareSongs(oldPlayback))
+                        {
+                            oldPlayback = playback;
+                            return;
+                        }
+
                         try
                         {
                             if (string.IsNullOrWhiteSpace(formatString))
@@ -53,6 +64,8 @@ namespace gpmdp2text
                             {
                                 File.WriteAllText(playbackTextFilePath, Formatter.ToString(playback, formatString));
                             }
+
+                            oldPlayback = playback;
                         }
                         catch (Exception ex)
                         {
