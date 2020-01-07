@@ -19,6 +19,13 @@ jobs:
           command: |
             dotnet publish -c Release -o bin/win --self-contained -r win-x64
             dotnet publish -c Release -o bin/linux --self-contained -r linux-x64
-            dotnet publish -c Release -o bin/mac --self-contained -r osx-x64
+            dotnet publish -c Release -o bin/osx --self-contained -r osx-x64
+      - run:
+          name: Package release
+          working_directory: bin/packages
+          command: |
+            tar -czf gpmdp2text-win-x64.tar.gz -C ../win .
+            tar -czf gpmdp2text-linux-x64.tar.gz -C ../linux .
+            tar -czf gpmdp2text-osx-x64.tar.gz -C ../osx .
       - store_artifacts:
-          path: bin
+          path: bin/packages
