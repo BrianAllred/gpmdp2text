@@ -24,8 +24,8 @@ jobs:
           name: Package release
           working_directory: bin/packages
           command: |
-            tar -czf gpmdp2text-win-x64.tar.gz -C ../win .
-            tar -czf gpmdp2text-linux-x64.tar.gz -C ../linux .
-            tar -czf gpmdp2text-osx-x64.tar.gz -C ../osx .
+            tar -czf gpmdp2text-win-x64-v0.1.0.tar.gz -C ../win .
+            tar -czf gpmdp2text-linux-x64-v0.1.0.tar.gz -C ../linux .
+            tar -czf gpmdp2text-osx-x64-v0.1.0.tar.gz -C ../osx .
       - store_artifacts:
           path: bin/packages
