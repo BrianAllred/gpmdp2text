@@ -14,7 +14,7 @@ By default, there is no configuration file and the program uses sane default val
 
 * `formatString`: Template for plain text output. Available template values are `%TITLE%`, `%ARTIST%`, `%ALBUM%`, and `%BR%` for line breaks. Default is `%TITLE% - %ARTIST%`.
 * `updateInterval`: How often to poll the JSON API for changes. Default is 5 seconds.
-* `outputFilePath`: File path for plain text output. Default is 
+* `outputFilePath`: File path for plain text output. Default is
   
   * Windows: `%APPDATA%\Google Play Music Desktop Player\json_store\playback.txt`
   * OS X: `~/Library/Application Support/Google Play Music Desktop Player\json_store\playback.txt`
